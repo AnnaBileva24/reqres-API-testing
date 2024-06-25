@@ -1,7 +1,13 @@
 const assert = require("assert");
 const { Given, When, Then } = require("@cucumber/cucumber");
 const axios = require("axios");
-const { checkUserExists } = require("../utils/apiUtils");
+const {
+  getUsersList,
+  checkUserExists,
+  createUser,
+  updateUser,
+  deleteUser,
+} = require("../utils/apiUtils");
 
 Given("check that the user with id {int} exists", async function (id) {
   const userExists = await checkUserExists(id);
@@ -9,12 +15,12 @@ Given("check that the user with id {int} exists", async function (id) {
 });
 
 When("a list of users is requested", async function () {
-  const resp = await axios.get("https://reqres.in/api/users");
+  const resp = await getUsersList();
   this.listOfUsers = resp;
 });
 
 When("a list of users on page {int} is requested", async function (page) {
-  const resp = await axios.get(`https://reqres.in/api/users?page=${page}`);
+  const resp = await await getUsersList(page);
   this.listOfUsers = resp;
 });
 
@@ -28,7 +34,7 @@ When(
   "a user is created with the following details",
   async function (dataTable) {
     const data = dataTable.rowsHash();
-    const resp = await axios.post("https://reqres.in/api/users", {
+    const resp = await createUser({
       name: data.name,
       job: data.job,
     });
@@ -50,7 +56,7 @@ When(
   "user with id {int} is updated with the following details",
   async function (id, dataTable) {
     const data = dataTable.rowsHash();
-    const resp = await axios.put(`https://reqres.in/api/users/${id}`, {
+    const resp = await updateUser(id, {
       name: data.name,
       job: data.job,
     });
@@ -63,7 +69,7 @@ Then("the user is successfully updated", function () {
 });
 
 When("the user with id {int} is deleted", async function (id) {
-  const resp = await axios.delete(`https://reqres.in/api/users/${id}`);
+  const resp = await deleteUser(id);
   this.response = resp;
 });
 
