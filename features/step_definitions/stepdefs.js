@@ -15,13 +15,11 @@ Given("check that the user with id {int} exists", async function (id) {
 });
 
 When("a list of users is requested", async function () {
-  const resp = await getUsersList();
-  this.listOfUsers = resp;
+  this.listOfUsers = await getUsersList();
 });
 
 When("a list of users on page {int} is requested", async function (page) {
-  const resp = await getUsersList(page);
-  this.listOfUsers = resp;
+  this.listOfUsers = await getUsersList(page);
 });
 
 Then("a list of users on page {int} is returned", function (page) {
@@ -34,8 +32,7 @@ When(
   "a user is created with the following details",
   async function (dataTable) {
     const data = dataTable.rowsHash();
-    const resp = await createUser(data);
-    this.response = resp;
+    this.response = await createUser(data);
   }
 );
 
@@ -53,8 +50,7 @@ When(
   "user with id {int} is updated with the following details",
   async function (id, dataTable) {
     const data = dataTable.rowsHash();
-    const resp = await updateUser(id, data);
-    this.response = resp;
+    this.response = await updateUser(id, data);
   }
 );
 
@@ -63,8 +59,7 @@ Then("the user is successfully updated", function () {
 });
 
 When("the user with id {int} is deleted", async function (id) {
-  const resp = await deleteUser(id);
-  this.response = resp;
+  this.response = await deleteUser(id);
 });
 
 Then("the user is successfully deleted", function () {
