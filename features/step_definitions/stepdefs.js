@@ -7,7 +7,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
-} = require("../utils/apiUtils");
+} = require("../utils/reqres_client");
 
 Given("check that the user with id {int} exists", async function (id) {
   const userExists = await checkUserExists(id);
@@ -20,7 +20,7 @@ When("a list of users is requested", async function () {
 });
 
 When("a list of users on page {int} is requested", async function (page) {
-  const resp = await await getUsersList(page);
+  const resp = await getUsersList(page);
   this.listOfUsers = resp;
 });
 
@@ -34,10 +34,7 @@ When(
   "a user is created with the following details",
   async function (dataTable) {
     const data = dataTable.rowsHash();
-    const resp = await createUser({
-      name: data.name,
-      job: data.job,
-    });
+    const resp = await createUser(data);
     this.response = resp;
   }
 );
@@ -56,10 +53,7 @@ When(
   "user with id {int} is updated with the following details",
   async function (id, dataTable) {
     const data = dataTable.rowsHash();
-    const resp = await updateUser(id, {
-      name: data.name,
-      job: data.job,
-    });
+    const resp = await updateUser(id, data);
     this.response = resp;
   }
 );

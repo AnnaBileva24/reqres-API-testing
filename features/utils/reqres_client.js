@@ -7,13 +7,11 @@ const apiClient = axios.create({
 
 const getUsersList = async (page) => {
   try {
-    let response = "";
     if (page) {
-      response = await apiClient.get(`/users?page=${page}`);
+      return await apiClient.get(`/users?page=${page}`);
     } else {
-      response = await apiClient.get(`/users`);
+      return await apiClient.get(`/users`);
     }
-    return response;
   } catch (error) {
     console.error(`Error getting list of users:`, error);
     throw error;
@@ -22,8 +20,7 @@ const getUsersList = async (page) => {
 
 const checkUserExists = async (userId) => {
   try {
-    const response = await apiClient.get(`/users/${userId}`);
-    return response;
+    return await apiClient.get(`/users/${userId}`);
   } catch (error) {
     console.error(`Error getting user with ID ${userId}:`, error);
     throw error;
@@ -32,8 +29,7 @@ const checkUserExists = async (userId) => {
 
 const createUser = async (userData) => {
   try {
-    const response = await apiClient.post("/users", userData);
-    return response;
+    return await apiClient.post("/users", userData);
   } catch (error) {
     console.error("Error creating user:", error);
     throw error;
@@ -42,8 +38,7 @@ const createUser = async (userData) => {
 
 const updateUser = async (userId, userData) => {
   try {
-    const response = await apiClient.put(`/users/${userId}`, userData);
-    return response;
+    return await apiClient.put(`/users/${userId}`, userData);
   } catch (error) {
     console.error(`Error updating user with ID ${userId}:`, error);
     throw error;
@@ -52,8 +47,7 @@ const updateUser = async (userId, userData) => {
 
 const deleteUser = async (userId) => {
   try {
-    const response = await apiClient.delete(`/users/${userId}`);
-    return response;
+    return await apiClient.delete(`/users/${userId}`);
   } catch (error) {
     console.error(`Error deleting user with ID ${userId}:`, error);
     throw error;
